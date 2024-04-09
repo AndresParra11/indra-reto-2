@@ -5,7 +5,7 @@ import PrivateRouter from "./PrivateRouter";
 import Register from "../pages/Register/Register";
 
 const AppRouter = () => {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   return (
     <BrowserRouter>
       <Routes>
