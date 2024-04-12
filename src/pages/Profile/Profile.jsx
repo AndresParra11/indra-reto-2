@@ -3,7 +3,7 @@ import {
   ChoosePhotoWidget,
   ProfileCardWidget,
 } from "../../components/Widgets/Widgets";
-import { GeneralInfoForm } from "../../components/Forms/Forms";
+import { GeneralInfoForm } from "../../components/GeneralInfoForm/GeneralInfoForm";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";

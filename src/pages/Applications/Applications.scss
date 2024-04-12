@@ -1,0 +1,17 @@
+.applications {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 30px;
+}
+
+.cardApplications {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .applications {
+    justify-content: center;
+    gap: 30px;
+  }
+}

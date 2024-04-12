@@ -24,6 +24,7 @@ import ProfilePicture from "../../assets/img/team/profile-picture-3.jpg";
 import PropTypes from "prop-types";
 
 export default function Sidebar() {
+  const userType = "admin";
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
@@ -184,8 +185,10 @@ export default function Sidebar() {
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
               <NavItem
-                title="Ver Postulaciones"
-                link="/application"
+                title={
+                  userType === "admin" ? "Ver Candidatos" : "Mis Aplicaciones"
+                }
+                link={userType === "admin" ? "/candidates" : "/applications"}
                 image={ReactHero}
               />
               <NavItem
@@ -193,6 +196,20 @@ export default function Sidebar() {
                 icon={faHandHoldingUsd}
                 link="/profile"
               />
+              {userType === "admin" ? (
+                <NavItem
+                  title="Crear proceso"
+                  icon={faHandHoldingUsd}
+                  link="/createProcess"
+                />
+              ) : null}
+              {userType === "admin" ? (
+                <NavItem
+                  title="Procesos Activos"
+                  icon={faHandHoldingUsd}
+                  link="/activeProcesses"
+                />
+              ) : null}
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>
           </div>
