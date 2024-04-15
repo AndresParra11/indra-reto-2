@@ -1,5 +1,6 @@
 {
   "name": "reto_2",
+  "homepage": "https://indra-reto-2.vercel.app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
