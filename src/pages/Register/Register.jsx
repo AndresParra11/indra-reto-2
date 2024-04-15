@@ -14,6 +14,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../auth/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 function Copyright(props) {
   return (
@@ -91,6 +92,9 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
           <Typography component="h1" variant="h5">
             Registro
           </Typography>
