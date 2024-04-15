@@ -37,8 +37,18 @@ import ProfileCover from "../../assets/img/profile-cover.jpg";
 
 import teamMembers from "../../data/teamMembers";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/AuthProvider";
 
 export const ProfileCardWidget = () => {
+  const navigate = useNavigate();
+  const auth = useAuth();
+
+  const handleNavigate = () => {
+    auth.user.typeProfile === "admin"
+      ? navigate("/candidates")
+      : navigate("/applications");
+  };
   return (
     <Card border="light" className="text-center p-0 mb-4">
       <div
@@ -56,7 +66,7 @@ export const ProfileCardWidget = () => {
           Senior Software Engineer
         </Card.Subtitle>
         <Card.Text className="text-gray mb-4">New York, USA</Card.Text>
-        <Button variant="secondary" size="sm">
+        <Button variant="secondary" size="sm" onClick={handleNavigate}>
           Ver Postulaciones
         </Button>
       </Card.Body>

@@ -38,7 +38,7 @@ export default function BasicCard({ date, description, job, skills, id }) {
   };
 
   return (
-    <Card sx={{ minWidth: 275, mb: 3 }}>
+    <Card sx={{ minWidth: 275, maxWidth: 450, mb: 3 }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {date}
