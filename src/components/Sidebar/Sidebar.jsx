@@ -218,6 +218,13 @@ export default function Sidebar() {
                   link="/activeProcesses"
                 />
               ) : null}
+              {user.typeProfile === "admin" ? (
+                <NavItem
+                  title="Ver métricas"
+                  icon={faChartLine}
+                  link="/metrics"
+                />
+              ) : null}
               <Button title="Cerrar Sesión" onClick={logout}>
                 <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Cerrar
                 Sesión

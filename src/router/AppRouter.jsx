@@ -10,6 +10,7 @@ import UsersByApplication from "../pages/UserByApplication/UserByApplication";
 import CreateProcess from "../pages/CreateProcess/CreateProcess";
 import ActiveProcesses from "../pages/ActiveProcesses/ActiveProcesses";
 import { useAuth } from "../auth/AuthProvider";
+import Metrics from "../pages/Metrics/Metrics";
 
 const AppRouter = () => {
   const auth = useAuth();
@@ -25,6 +26,7 @@ const AppRouter = () => {
           }
         >
           <Route path="/profile" element={<Profile />} />
+          <Route path="/metrics" element={<Metrics />} />
           <Route path="/applications" element={<Applications />} />
 
           <Route
