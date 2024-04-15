@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHandHoldingUsd,
   faSignOutAlt,
   faTimes,
   faPenToSquare,
