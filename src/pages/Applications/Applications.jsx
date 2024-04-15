@@ -1,10 +1,13 @@
 import Sidebar from "../../components/Sidebar/Sidebar";
 import CardApplications from "../../components/CardApplications/CardApplications";
 import "./Applications.scss";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../auth/AuthProvider";
+import Button from "@mui/material/Button";
+import { faBackwardStep } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Applications = () => {
   const auth = useAuth();
@@ -84,6 +87,13 @@ const Applications = () => {
             }
             return null;
           })
+        )}
+        {auth.user.typeProfile === "admin" && (
+          <Link to="/candidates">
+            <Button title="Atrás">
+              <FontAwesomeIcon icon={faBackwardStep} className="me-2" /> Atrás
+            </Button>
+          </Link>
         )}
       </div>
     </div>
