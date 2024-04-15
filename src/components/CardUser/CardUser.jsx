@@ -37,6 +37,6 @@ export default function BasicCard({ name, cellphone, id, email }) {
 BasicCard.propTypes = {
   name: PropTypes.string,
   cellphone: PropTypes.string,
-  id: PropTypes.number,
+  id: PropTypes.string,
   email: PropTypes.string,
 };

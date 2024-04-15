@@ -5,23 +5,29 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../../auth/AuthProvider";
 export default function BasicCard({
   date,
   description,
   job,
-  stack,
+  skills,
   id,
   idUser,
 }) {
   const navigate = useNavigate();
-  const userType = "admin";
-  const handleViewDetail = (id) => {
-    if (userType === "admin") {
-      navigate(`/candidates/${idUser}/${id}`);
+  const { user } = useAuth();
+  const handleViewDetail = (idProcess) => {
+    if (user.typeProfile === "admin") {
+      navigate(`/candidates/${idUser}/${idProcess}`);
     } else {
-      navigate(`/applications/${id}`);
+      navigate(`/applications/${idProcess}`);
     }
+  };
+  const maxLength = 260; // Define la longitud máxima de la descripción
+
+  // Función para truncar la descripción si es mayor que la longitud máxima
+  const truncateDescription = (str, maxLength) => {
+    return str.length > maxLength ? str.substring(0, maxLength) + "..." : str;
   };
   return (
     <Card sx={{ minWidth: 275, mb: 3 }}>
@@ -33,15 +39,17 @@ export default function BasicCard({
           {job}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {stack.join(", ")}
+          {skills}
         </Typography>
-        <Typography variant="body2">{description}</Typography>
+        <Typography variant="body2">
+          {truncateDescription(description, maxLength)}{" "}
+        </Typography>
       </CardContent>
       <CardActions>
         <Button size="small" onClick={() => handleViewDetail(id)}>
           Ver Detalles
         </Button>
-        {userType === "admin " && (
+        {user.typeProfile === "user " && (
           <Button size="small">Invitar al espacio</Button>
         )}
       </CardActions>
@@ -54,7 +62,7 @@ BasicCard.propTypes = {
   date: PropTypes.string,
   description: PropTypes.string,
   job: PropTypes.string,
-  stack: PropTypes.array,
-  id: PropTypes.number,
+  skills: PropTypes.string,
+  id: PropTypes.string,
   idUser: PropTypes.string,
 };

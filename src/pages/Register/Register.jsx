@@ -12,6 +12,9 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../../auth/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -36,21 +39,35 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const auth = useAuth();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { name, email, password, birthday, cellphone } =
       event.target.elements;
-    console.log({
-      name: name.value,
-      email: email.value,
-      password: password.value,
-      birthday: birthday.value,
-      cellphone: cellphone.value,
-    });
+    try {
+      const res = await axios.post("http://127.0.0.1:8000/api/users", {
+        name: name.value,
+        email: email.value,
+        password: password.value,
+        birthday: birthday.value,
+        cellphone: cellphone.value,
+        userType: "user",
+      });
+
+      // Establecer la información de autenticación
+      auth.saveUser(res.data._id);
+
+      // Redirigir al usuario a la página de perfil
+      navigate("/profile");
+    } catch (error) {
+      // Manejar errores si ocurre algún problema durante el registro
+      console.error("Error al registrar al usuario:", error);
+    }
   };
 
   const handlePasswordChange = (event) => {

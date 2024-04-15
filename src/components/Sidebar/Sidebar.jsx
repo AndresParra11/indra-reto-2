@@ -7,6 +7,10 @@ import {
   faHandHoldingUsd,
   faSignOutAlt,
   faTimes,
+  faPenToSquare,
+  faPlus,
+  faChartLine,
+  faPerson,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Nav,
@@ -22,9 +26,10 @@ import { Link } from "react-router-dom";
 import ReactHero from "../../assets/img/technologies/react-hero-logo.svg";
 import ProfilePicture from "../../assets/img/team/profile-picture-3.jpg";
 import PropTypes from "prop-types";
+import { useAuth } from "../../auth/AuthProvider";
 
 export default function Sidebar() {
-  const userType = "admin";
+  const { user, logout } = useAuth();
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
@@ -186,30 +191,38 @@ export default function Sidebar() {
             <Nav className="flex-column pt-3 pt-md-0">
               <NavItem
                 title={
-                  userType === "admin" ? "Ver Candidatos" : "Mis Aplicaciones"
+                  user.typeProfile === "admin"
+                    ? "Ver Candidatos"
+                    : "Mis Aplicaciones"
                 }
-                link={userType === "admin" ? "/candidates" : "/applications"}
-                image={ReactHero}
+                link={
+                  user.typeProfile === "admin" ? "/candidates" : "/applications"
+                }
+                icon={faPerson}
               />
               <NavItem
                 title="Editar Perfil"
-                icon={faHandHoldingUsd}
+                icon={faPenToSquare}
                 link="/profile"
               />
-              {userType === "admin" ? (
+              {user.typeProfile === "admin" ? (
                 <NavItem
                   title="Crear proceso"
-                  icon={faHandHoldingUsd}
+                  icon={faPlus}
                   link="/createProcess"
                 />
               ) : null}
-              {userType === "admin" ? (
+              {user.typeProfile === "admin" ? (
                 <NavItem
                   title="Procesos Activos"
-                  icon={faHandHoldingUsd}
+                  icon={faChartLine}
                   link="/activeProcesses"
                 />
               ) : null}
+              <Button title="Cerrar Sesión" onClick={logout}>
+                <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Cerrar
+                Sesión
+              </Button>
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>
           </div>

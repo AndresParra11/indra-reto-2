@@ -2,48 +2,89 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import CardApplications from "../../components/CardApplications/CardApplications";
 import "./Applications.scss";
 import { useParams } from "react-router-dom";
-
-const Apps = [
-  {
-    id: 1,
-    job: "Desarrollador Full Stack",
-    date: "Hace 2 días",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    stack: ["React, Node.js, MongoDB"],
-  },
-  {
-    id: 2,
-    job: "Desarrollador Frontend",
-    date: "Hace 3 días",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    stack: ["React, Node.js, MongoDB"],
-  },
-  {
-    id: 3,
-    job: "Desarrollador Backend",
-    date: "Hace 4 días",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    stack: ["React, Node.js, MongoDB"],
-  },
-];
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useAuth } from "../../auth/AuthProvider";
 
 const Applications = () => {
+  const auth = useAuth();
   const { idUser } = useParams();
+  const [user, setUser] = useState({});
+  const [userProcesses, setUserProcesses] = useState([]);
+  const [processes, setProcesses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (idUser) {
+      getUser();
+      getProcesses();
+    } else {
+      setUserProcesses(auth.user.processes);
+      getProcesses();
+      setLoading(false);
+    }
+  }, []);
+
+  const getUser = async () => {
+    try {
+      const res = await axios.get(`http://127.0.0.1:8000/api/users/${idUser}`);
+      setUser(res.data);
+      setUserProcesses(res.data.processes);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  const getProcesses = async () => {
+    try {
+      const res = await axios.get("http://127.0.0.1:8000/api/processes");
+      setProcesses(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  if (!userProcesses) {
+    return (
+      <div className="content">
+        <Sidebar />
+        <h1>No hay procesos asociados a este usuario</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="content">
       <Sidebar />
       <div className="applications">
-        {Apps.map((app) => (
-          <CardApplications
-            key={app.id}
-            date={app.date}
-            description={app.description}
-            job={app.job}
-            stack={app.stack}
-            id={app.id}
-            idUser={idUser ? idUser : null}
-          />
-        ))}
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          userProcesses.map((processId) => {
+            // Filtra los procesos que coincidan con los procesos asociados al usuario
+            const process = processes.find(
+              (process) => process._id === processId
+            );
+            if (process) {
+              return (
+                <CardApplications
+                  key={process._id}
+                  date={process.date}
+                  description={process.description}
+                  job={process.job}
+                  skills={process.skills}
+                  id={process._id}
+                  idUser={idUser ? idUser : null}
+                />
+              );
+            }
+            return null;
+          })
+        )}
       </div>
     </div>
   );

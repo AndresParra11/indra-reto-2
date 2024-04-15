@@ -13,6 +13,10 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../../auth/AuthProvider";
 
 function Copyright(props) {
   return (
@@ -37,10 +41,34 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const auth = useAuth();
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { email, password } = event.target.elements;
-    console.log({ email: email.value, password: password.value });
+    try {
+      const res = await axios.post("http://127.0.0.1:8000/api/login", {
+        email: email.value,
+        password: password.value,
+      });
+
+      console.log("Respuesta del servidor:", res.data);
+
+      // Establecer la información de autenticación
+      auth.loginUser(res.data.idUser);
+
+      // Redirigir al usuario a la página de perfil
+      Swal.fire({
+        icon: "success",
+        title: "¡Credenciales correctas!",
+        text: `Se realizó el inicio de sesión de forma satisfactoria.`,
+      }).then(() => {
+        navigate("/profile");
+      });
+    } catch (error) {
+      // Manejar errores si ocurre algún problema durante el registro
+      console.error("Error al inicar sesión:", error);
+    }
   };
 
   return (

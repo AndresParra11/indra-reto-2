@@ -5,12 +5,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/AuthProvider";
 
 export default function BasicCard({ title, date, id, idProcess, idUser }) {
   const navigate = useNavigate();
-  const userType = "admin";
+  const { user } = useAuth();
   const handleViewDetailStage = (id) => {
-    if (userType === "admin") {
+    if (user.typeProfile === "admin") {
       navigate(`/candidates/${idUser}/${idProcess}/${id}`);
     } else {
       navigate(`/applications/${idProcess}/${id}`);

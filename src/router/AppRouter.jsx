@@ -9,16 +9,19 @@ import DetailStage from "../pages/DetailStage/DetailStage";
 import UsersByApplication from "../pages/UserByApplication/UserByApplication";
 import CreateProcess from "../pages/CreateProcess/CreateProcess";
 import ActiveProcesses from "../pages/ActiveProcesses/ActiveProcesses";
+import { useAuth } from "../auth/AuthProvider";
 
 const AppRouter = () => {
-  const isAuthenticated = true;
-  const userType = "admin";
+  const auth = useAuth();
   return (
     <BrowserRouter>
       <Routes>
         <Route
           element={
-            <PrivateRouter canActivate={isAuthenticated} redirectPath="/" />
+            <PrivateRouter
+              canActivate={auth.isAuthenticated}
+              redirectPath="/"
+            />
           }
         >
           <Route path="/profile" element={<Profile />} />
@@ -27,7 +30,7 @@ const AppRouter = () => {
           <Route
             element={
               <PrivateRouter
-                canActivate={userType === "admin"}
+                canActivate={auth.user.typeProfile === "admin"}
                 redirectPath="/applications"
               />
             }
@@ -58,7 +61,7 @@ const AppRouter = () => {
         <Route
           element={
             <PrivateRouter
-              canActivate={!isAuthenticated}
+              canActivate={!auth.isAuthenticated}
               redirectPath="/profile"
             />
           }

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Card, Form, Button, Col, Row } from "@themesberg/react-bootstrap";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const ProcessForm = () => {
   const [formData, setFormData] = useState({
@@ -35,9 +37,26 @@ const ProcessForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    try {
+      const res = await axios.post("http://127.0.0.1:8000/api/processes", {
+        description: formData.description,
+        skills: formData.skills,
+        date: formData.date,
+        job: formData.job,
+        stages: formData.stages,
+      });
+      console.log(res.data);
+      Swal.fire({
+        icon: "success",
+        title: "¡Proceso creado!",
+        text: `Se creó el proceso de selección de forma satisfactoria.`,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
