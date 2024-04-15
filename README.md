@@ -22,5 +22,6 @@ El objetivo principal del aplicativo es aumentar la cantidad de retroalimentacio
 
 - [@AndresParra11](https://github.com/AndresParra11)
 - [@NilsOnfire](https://github.com/NilsOnfire)
+- [@Wiferpagri](https://github.com/Wiferpagri)
 
 
