@@ -12,8 +12,8 @@ El objetivo principal del aplicativo es aumentar la cantidad de retroalimentacio
 [Talent Tracker](https://indra-reto-2.vercel.app/)
 ## Tech Stack
 
-**Client:** React, SASS, Material UI.
-**Server:** FastAPI, Python y MongoDB.
+- **Client:** React, SASS, Material UI.
+- **Server:** FastAPI, Python y MongoDB.
 
 
 ## Authors
