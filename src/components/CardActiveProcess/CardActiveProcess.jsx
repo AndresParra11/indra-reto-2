@@ -7,6 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function BasicCard({ date, description, job, skills, id }) {
   const maxLength = 260; // Define la longitud máxima de la descripción
@@ -29,6 +30,11 @@ export default function BasicCard({ date, description, job, skills, id }) {
         }
       );
       console.log("Candidato invitado:", res.data);
+      Swal.fire({
+        icon: "success",
+        title: "¡Proceso Asignado!",
+        text: `Se asignó el proceso de selección de forma satisfactoria.`,
+      });
     } catch (error) {
       console.log("Error al enviar la invitación:", error);
     }
